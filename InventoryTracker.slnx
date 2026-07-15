@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="InventoryTracker.Tests/InventoryTracker.Tests.csproj" />
+  <Project Path="InventoryTracker.Web/InventoryTracker.Web.csproj" />
+</Solution>
