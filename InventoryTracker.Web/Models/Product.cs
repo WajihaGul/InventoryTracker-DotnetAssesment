@@ -18,8 +18,8 @@ namespace InventoryTracker.Web.Models
         [MaxLength(200)]
         public string? Description { get; set; }
 
-        [Range(0, int.MaxValue, ErrorMessage = "Reorder level cannot be negative.")]
         [Display(Name = "Reorder Level")]
+        [Range(0, int.MaxValue, ErrorMessage = "Reorder level cannot be negative.")]
         public int ReorderLevel { get; set; }
 
         [Display(Name = "Active")]

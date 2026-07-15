@@ -210,5 +210,24 @@ namespace InventoryTracker.Web.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+        public async Task<IActionResult> Dashboard()
+        {
+            var products = await _db.Products.Where(p => p.IsActive).ToListAsync();
+            var stockLevels = await _stockService.GetStockLevelsAsync();
+
+            var lowStockCount = products.Count(p =>
+                stockLevels.GetValueOrDefault(p.Id, 0) <= p.ReorderLevel);
+
+            var totalStockUnits = products.Sum(p => stockLevels.GetValueOrDefault(p.Id, 0));
+
+            var vm = new DashboardVm
+            {
+                TotalSkus = products.Count,
+                LowStockCount = lowStockCount,
+                TotalStockUnits = totalStockUnits
+            };
+
+            return View(vm);
+        }
     }
 }

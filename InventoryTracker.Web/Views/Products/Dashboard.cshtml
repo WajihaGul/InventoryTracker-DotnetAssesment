@@ -1,0 +1,30 @@
+﻿@model InventoryTracker.Web.ViewModels.DashboardVm
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h1>Dashboard</h1>
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card text-center p-4 mb-3">
+            <h2>@Model.TotalSkus</h2>
+            <p class="text-muted mb-0">Total SKUs</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center p-4 mb-3">
+            <h2 class="@(Model.LowStockCount > 0 ? "text-danger" : "")">@Model.LowStockCount</h2>
+            <p class="text-muted mb-0">Low Stock Items</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center p-4 mb-3">
+            <h2>@Model.TotalStockUnits</h2>
+            <p class="text-muted mb-0">Total Units In Stock</p>
+        </div>
+    </div>
+</div>
+
+<a asp-action="Index" class="btn btn-secondary">Go to Products</a>
