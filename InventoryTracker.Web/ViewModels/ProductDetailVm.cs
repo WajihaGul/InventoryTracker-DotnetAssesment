@@ -12,5 +12,7 @@ namespace InventoryTracker.Web.ViewModels
         public int StockLevel { get; set; }
         public bool IsLowStock => StockLevel <= ReorderLevel;
         public List<StockMovement> Movements { get; set; } = new();
+
+        public RecordMovementVm Movement { get; set; } = new();
     }
 }

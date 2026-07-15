@@ -1,8 +1,10 @@
-namespace InventoryTracker.Web.Models;
-
-public class ErrorViewModel
+﻿namespace InventoryTracker.Web.Models
 {
-    public string? RequestId { get; set; }
+    public class ErrorViewModel
+    {
 
-    public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+        public string? RequestId { get; set; }
+
+        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+    }
 }

@@ -63,7 +63,8 @@ namespace InventoryTracker.Web.Controllers
                 Description = product.Description,
                 ReorderLevel = product.ReorderLevel,
                 StockLevel = await _stockService.GetStockLevelAsync(product.Id),
-                Movements = product.Movements.OrderByDescending(m => m.CreatedUtc).ToList()
+                Movements = product.Movements.OrderByDescending(m => m.CreatedUtc).ToList(),
+                Movement = new RecordMovementVm { ProductId = product.Id }
             };
 
             return View(vm);
@@ -72,10 +73,12 @@ namespace InventoryTracker.Web.Controllers
  
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RecordMovement(RecordMovementVm vm)
+        public async Task<IActionResult> RecordMovement([Bind(Prefix = "Movement")] RecordMovementVm vm)
+
         {
             if (!ModelState.IsValid)
             {
+
                 TempData["MovementError"] = "Please provide a valid quantity.";
                 return RedirectToAction(nameof(Details), new { id = vm.ProductId });
             }

@@ -1,0 +1,94 @@
+﻿@model InventoryTracker.Web.ViewModels.ProductDetailVm
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<h1>@Model.Name</h1>
+<p class="text-muted">SKU: @Model.Sku</p>
+
+@if (TempData["MovementError"] != null)
+{
+    <div class="alert alert-danger">@TempData["MovementError"]</div>
+}
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <dl class="row">
+            <dt class="col-sm-4">Description</dt>
+            <dd class="col-sm-8">@(Model.Description ?? "—")</dd>
+
+            <dt class="col-sm-4">Current Stock</dt>
+            <dd class="col-sm-8">
+                @Model.StockLevel
+                @if (Model.IsLowStock)
+                {
+                    <span class="badge bg-danger">Low stock</span>
+                }
+            </dd>
+
+            <dt class="col-sm-4">Reorder Level</dt>
+            <dd class="col-sm-8">@Model.ReorderLevel</dd>
+        </dl>
+    </div>
+
+    <div class="col-md-6">
+        <h5>Record Movement</h5>
+        <form asp-action="RecordMovement" method="post">
+            <input type="hidden" asp-for="Movement.ProductId" />
+
+            <div class="mb-2">
+                <label asp-for="Movement.Type" class="form-label"></label>
+                <select asp-for="Movement.Type" class="form-select">
+                    <option value="1">In</option>
+                    <option value="2">Out</option>
+                </select>
+            </div>
+
+            <div class="mb-2">
+                <label asp-for="Movement.Quantity" class="form-label"></label>
+                <input asp-for="Movement.Quantity" class="form-control" min="1" />
+                <span asp-validation-for="Movement.Quantity" class="text-danger"></span>
+            </div>
+
+            <div class="mb-2">
+                <label asp-for="Movement.Note" class="form-label"></label>
+                <input asp-for="Movement.Note" class="form-control" maxlength="200" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Record</button>
+        </form>
+    </div>
+</div>
+
+<h5>Movement History</h5>
+@if (!Model.Movements.Any())
+{
+    <p class="text-muted">No movements recorded yet.</p>
+}
+else
+{
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Quantity</th>
+                <th>Note</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var m in Model.Movements)
+            {
+                <tr>
+                    <td>@m.CreatedUtc.ToLocalTime().ToString("g")</td>
+                    <td>@m.Type</td>
+                    <td>@m.Quantity</td>
+                    <td>@(m.Note ?? "—")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<a asp-action="Index" class="btn btn-secondary">Back to list</a>
