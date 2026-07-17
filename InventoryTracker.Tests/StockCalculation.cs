@@ -51,7 +51,7 @@ namespace InventoryTracker.Tests
 
             var stock = await service.GetStockLevelAsync(product.Id);
 
-            Assert.Equal(90, stock); // 100 - 30 + 20
+            Assert.Equal(90, stock);
         }
 
         [Fact]

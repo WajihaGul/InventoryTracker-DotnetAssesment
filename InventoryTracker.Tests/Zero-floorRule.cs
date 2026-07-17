@@ -3,6 +3,8 @@ using InventoryTracker.Web.Models;
 using InventoryTracker.Web.Services;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace InventoryTracker.Tests
@@ -24,8 +26,8 @@ namespace InventoryTracker.Tests
             return (db, connection);
         }
 
-        private static Microsoft.Extensions.Logging.ILogger<StockService> NullLogger()
-            => Microsoft.Extensions.Logging.Abstractions.NullLogger<StockService>.Instance;
+        private static ILogger<StockService> NullLogger()
+            => NullLogger<StockService>.Instance;
 
         [Fact]
         public async Task RecordMovement_OutExceedingStock_IsRejected()

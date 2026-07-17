@@ -29,7 +29,10 @@ namespace InventoryTracker.Web.Controllers
             }
 
             var products = await query.OrderBy(p => p.Name).ToListAsync();
-            var stockLevels = await _stockService.GetStockLevelsAsync();
+            
+            var productIds = products.Select(p=>p.Id).ToList();
+
+            var stockLevels = await _stockService.GetStockLevelsAsync(productIds);
 
             var vm = products.Select(p => new ProductListItemVm
             {
@@ -213,7 +216,9 @@ namespace InventoryTracker.Web.Controllers
         public async Task<IActionResult> Dashboard()
         {
             var products = await _db.Products.Where(p => p.IsActive).ToListAsync();
-            var stockLevels = await _stockService.GetStockLevelsAsync();
+            
+            var productIds = products.Select(p => p.Id).ToList();
+            var stockLevels = await _stockService.GetStockLevelsAsync(productIds);
 
             var lowStockCount = products.Count(p =>
                 stockLevels.GetValueOrDefault(p.Id, 0) <= p.ReorderLevel);

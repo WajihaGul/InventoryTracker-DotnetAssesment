@@ -62,7 +62,7 @@ Five products are seeded on first run, each deliberately covering a different sc
 | Hex Bolt M8 | 500 | 50 | Normal stock — no badge |
 | Hex Nut M8 | 80 | 100 | Below reorder level |
 | Flat Washer M8 | 40 | 40 | **Exactly at** reorder level — tests the inclusive `<=` boundary |
-| Ball Bearing 6204-2RS | 10 | 10 | Low stock — good candidate for manually testing the zero-floor rule |
+| Ball Bearing 6204-2RS | 0 | 10 | Zero stock — good candidate for testing that an Out movement is correctly rejected |
 | O-Ring Seal | 60 | 25 | Soft-deleted (`IsActive = false`) — hidden from the active product list |
 
 ## Screens
